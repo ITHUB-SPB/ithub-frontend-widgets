@@ -17,6 +17,11 @@
     outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
+
+  &:disabled {
+    background: gainsboro;
+    pointer-events: none;
+  }
 }
 
 .reset {
@@ -45,4 +50,9 @@
 .result {
   color: blueviolet;
   font-weight: bold;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
 }

@@ -1,23 +1,47 @@
-import { useState } from 'react'
+import { useReducer } from 'react'
 
 type CounterProps = {
     min: number | null;
     max: number | null;
+    updateClicks: () => void;
+}
+
+type CounterState = {
+    count: number,
+    min: number | null,
+    max: number | null
+}
+
+type Action = { type: 'plus' } | { type: 'minus' } | { type: 'reset ' }
+
+function counterReducer(state: CounterState, action: Action) {
+    switch (action.type) {
+        case 'plus':
+            return state.max === null || state.count < state.max
+                ? { ...state, count: state.count + 1 }
+                : state
+        case 'minus':
+            return state.min === null || state.count > state.min
+                ? { ...state, count: state.count - 1 }
+                : state
+        case 'reset ':
+            return { ...state, count: state.min ?? 0 }
+    }
 }
 
 export default function Counter(props: CounterProps) {
-    const [count, setCount] = useState(props.min ?? 0)
+    const [state, dispatch] = useReducer(counterReducer, {
+        count: props.min ?? 0,
+        min: props.min,
+        max: props.max
+    })
 
-    function handleClick(action: "plus" | "minus") {
-        if (action === "minus" && (props.min === null || count > props.min)) {
-            setCount(count => count - 1)
-        } else if (action === "plus" && (props.max === null || count < props.max)) {
-            setCount(count => count + 1)
-        }
+    function canPlus(): boolean {
+        return state.max === null || state.count < state.max
     }
 
-    function handleReset() {
-        setCount(props.min ?? 0)
+    function canMinus(): boolean {
+        return state.min === null || state.count > state.min
     }
 
     return (
@@ -25,18 +49,26 @@ export default function Counter(props: CounterProps) {
             <button
                 type="button"
                 className="counter"
-                onClick={() => handleClick('minus')}
+                disabled={!canMinus()}
+                onClick={() => {
+                    dispatch({ type: "minus" })
+                    props.updateClicks()
+                }}
             >-</button>
 
-            <div>
-                <span className="result">{count}</span>
-                <button type="button" className="reset" onClick={handleReset}>x</button>
+            <div className="column">
+                <span className="result">{state.count}</span>
+                <button type="button" className="reset" onClick={() => dispatch({ type: "reset " })}>x</button>
             </div>
 
             <button
                 type="button"
                 className="counter"
-                onClick={() => handleClick('plus')}
+                disabled={!canPlus()}
+                onClick={() => {
+                    dispatch({ type: "plus" })
+                    props.updateClicks()
+                }}
             >+</button>
         </section >
     )
