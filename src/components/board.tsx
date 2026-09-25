@@ -1,9 +1,14 @@
-import { useState } from "react"
+import { useState, type Dispatch, type SetStateAction } from "react"
 import classes from './board.module.css'
 
 type Move = 'x' | 'o'
 type Board = Array<Move | null>
 type Index = number // TODO
+
+type BoardProps = {
+    currentMove: Move,
+    updateMove: Dispatch<SetStateAction<Move>>
+}
 
 function checkWinner(board: Board, player: Move): Move | null {
     if (board[0] && board[0] === board[1] && board[1] === board[2]) {
@@ -13,9 +18,7 @@ function checkWinner(board: Board, player: Move): Move | null {
     return null
 }
 
-export default function Board() {
-    const [currentMove, updateMove] = useState<Move>('x')
-
+export default function Board({ currentMove, updateMove }: BoardProps) {
     const [board, updateBoard] = useState<Board>(Array(9).fill(null))
 
     const handleClick = (fieldIndex: Index) => {
