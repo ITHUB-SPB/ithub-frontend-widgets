@@ -1,32 +1,94 @@
-# React + TypeScript + Vite
+## Описание проекта
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Приложение представляет игру в крестики-нолики.
 
-Currently, two official plugins are available:
+Игроки делают ходы по очереди (начинают всегда крестики). Иконка игрока, чей ход ожидается в данный момент, отображаются нормально, а второго игрока - со сниженной насыщенностью. 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Когда один из игроков получает три-в-ряд, эти ячейки (а также иконка игрока) подсвечиваются зеленым. При ничьей подсветки не происходит.
 
-## React Compiler
+По завершению игры (победой или ничьей) появляется кнопка "Начать заново", при нажатии на которую состояние игры сбрасывается.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Требования
 
-## Expanding the Oxlint configuration
+### Стек
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+Использовать фреймворк `React 19` и сборщик `Vite 8`. Все необходимые библиотеки уже включены в `package.json`, добавлять что-либо помимо них не стоит.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+### Дизайн
+
+Базовый дизайн уже реализован. Для доработок и вдохновения можете пользоваться [макетом](https://www.figma.com/design/1rKJjzNZJ7BL06XaFqk8Xj/Tic-Tac-Toe--Community-?node-id=0-1&p=f&t=2bQ6SV4kGJmD35Qa-0). Повторять макет в точности не требуется.
+
+### Компоненты
+
+При реализации придерживайтесь следующей структуры компонентов:
+
+- сплэш-скрин
+- экран создания игры 
+- экран игры
+  - легенда
+    - иконки игроков
+  - игровое поле
+    - ячейка игрового поля
+      - иконка внутри него
+  - кнопка "начать снова"
+
+### Хранение состояния
+
+Состояние игры включает в себя:
+
+- состояние поля (двумерный массив состояний ячеек поля);
+- статус (x-wins, o-wins, draw, x-move, o-move).
+
+Поле при первом запуске (либо перезапуске) имеет следующий вид:
+
+```ts
+[
+    [null, null, null],
+    [null, null, null],
+    [null, null, null]
+]
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Статус при первом запуске имеет вид
+
+```ts
+"x-move"
+```
+
+При завершении игры победой крестиков поле может иметь вид
+
+```ts
+[
+    ["x", "x", "x"],
+    [null, "o", null],
+    [null, "o", null]
+]
+```
+
+А статус будет равен 
+
+```ts
+"x-wins"
+```
+
+## Требования по API
+
+Приложение должно быть реализовано без дополнительных библиотек. Можно использовать лишь встроенные хуки.
+
+- useState / useReducer,
+- useEffect / useLayoutEffect,
+- useMemo / useCallback.
+
+## Критерии оценивания
+
+1. При клике по полю игры изменяется состояние игрового поля, и в соответствии с ним обновляется UI (2 балла).
+
+2. Ходы игроков чередуются (1 балл).
+
+3. Иконка игрока, чей ход ожидается в данный момент, отображаются нормально, а второго игрока - со сниженной насыщенностью (1 балл).
+
+4. Корректно определяется статус на поле: победа, ничья, или игра еще в процессе (3 балла).
+
+5. Если один из игроков получает три-в-ряд, его ячейки и его иконка подсвечиваются зеленым (2 балла).
+
+6. По нажатию на кнопку "Начать сначала" происходит сброс состояния игры, и в нее можно сыграть заново (2 балла). Кнопка "Начать сначала" отображается только по завершению игры (1 балл).
