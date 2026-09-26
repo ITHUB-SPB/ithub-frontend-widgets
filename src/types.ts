@@ -1,4 +1,4 @@
-export type GameState = "start" | "game" | "result";
+export type GameState = "start" | "game";
 
 export type Board = Array<Move | null>;
 

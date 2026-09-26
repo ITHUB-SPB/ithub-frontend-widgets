@@ -1,4 +1,4 @@
-import { type SubmitEvent } from "react";
+import { useRef, useEffect, type SubmitEvent } from "react";
 import type { Players } from "../types";
 
 type StartScreenProps = {
@@ -8,6 +8,12 @@ type StartScreenProps = {
 };
 
 export default function StartScreen({ players, setPlayers, updateScreen }: StartScreenProps) {
+  const inputRef = useRef<HTMLInputElement>(undefined!);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   const handleSubmit = (event: SubmitEvent) => {
     event.preventDefault();
     event.stopPropagation();
@@ -32,7 +38,7 @@ export default function StartScreen({ players, setPlayers, updateScreen }: Start
     <form action="" method="post" onSubmit={handleSubmit}>
       <h2>Стартовый экран</h2>
       <section>
-        <input type="text" name="namePlayer1" placeholder="Игрок 1" required />
+        <input ref={inputRef} type="text" name="namePlayer1" placeholder="Игрок 1" required />
         <input type="color" name="colorPlayer1" />
       </section>
       <section>

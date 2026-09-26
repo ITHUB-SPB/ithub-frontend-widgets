@@ -8,14 +8,6 @@ type BoardProps = {
   updateMove: Dispatch<SetStateAction<Move>>;
 };
 
-function checkWinner(board: Board, player: Move): Move | null {
-  if (board[0] && board[0] === board[1] && board[1] === board[2]) {
-    return player;
-  }
-
-  return null;
-}
-
 export default function Board({ currentMove, updateMove }: BoardProps) {
   const { board, updateBoard } = useContext(boardContext);
 
@@ -27,20 +19,18 @@ export default function Board({ currentMove, updateMove }: BoardProps) {
       // return newState
     });
 
-    const winner = checkWinner(board, currentMove);
-
-    if (winner) {
-      console.log(`winner: ${winner}`);
-      return;
-    }
-
     updateMove((state) => (state === "o" ? "x" : "o"));
   };
 
   return (
     <main className={classes.board}>
       {board.map((field, ix) => (
-        <button key={`field-${ix}`} className={classes.field} onClick={() => handleClick(ix)} disabled={Boolean(field)}>
+        <button
+          key={`field-${ix}`}
+          className={classes.field}
+          onClick={() => handleClick(ix)}
+          disabled={Boolean(field)}
+        >
           {field}
         </button>
       ))}

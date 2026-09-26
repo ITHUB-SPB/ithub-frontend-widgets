@@ -3,6 +3,7 @@ import GameScreen from "./screens/game";
 import StartScreen from "./screens/start";
 
 import { boardContext } from "./context";
+import { checkWinner } from "./lib";
 import type { GameState, Board, Players } from "./types";
 
 export default function App() {
@@ -42,12 +43,13 @@ export default function App() {
     if (board) {
       localStorage.setItem("xo_game", JSON.stringify(board));
     }
+    console.log(checkWinner(board));
   }, [board]);
 
   const screens = {
     start: <StartScreen players={players} setPlayers={setPlayers} updateScreen={updateGameState} />,
-    game: <GameScreen players={players} />,
-    result: <GameScreen players={players} />,
+    game: <GameScreen players={players} updateGameState={updateGameState} />,
+    // result: <GameScreen players={players} />,
   };
 
   return screens[gameState];
