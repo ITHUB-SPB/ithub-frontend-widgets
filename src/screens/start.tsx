@@ -1,14 +1,5 @@
-import type { SubmitEvent } from "react"
-
-type Player = {
-    name: string;
-    color: string;
-}
-
-type Players = {
-    player1: Player;
-    player2: Player;
-}
+import { useEffect, type SubmitEvent } from "react"
+import type { Players } from "../types"
 
 type StartScreenProps = {
     players: Players;

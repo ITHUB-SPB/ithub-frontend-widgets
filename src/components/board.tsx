@@ -1,13 +1,12 @@
 import { useState, type Dispatch, type SetStateAction } from "react"
 import classes from './board.module.css'
-
-type Move = 'x' | 'o'
-type Board = Array<Move | null>
-type Index = number // TODO
+import type { Board, Move, Index } from "../types"
 
 type BoardProps = {
     currentMove: Move,
-    updateMove: Dispatch<SetStateAction<Move>>
+    updateMove: Dispatch<SetStateAction<Move>>,
+    board: Board,
+    updateBoard: Dispatch<SetStateAction<Board>>,
 }
 
 function checkWinner(board: Board, player: Move): Move | null {
@@ -18,9 +17,7 @@ function checkWinner(board: Board, player: Move): Move | null {
     return null
 }
 
-export default function Board({ currentMove, updateMove }: BoardProps) {
-    const [board, updateBoard] = useState<Board>(Array(9).fill(null))
-
+export default function Board({ currentMove, updateMove, board, updateBoard }: BoardProps) {
     const handleClick = (fieldIndex: Index) => {
         updateBoard(state => {
             return [
