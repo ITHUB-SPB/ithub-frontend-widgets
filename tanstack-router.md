@@ -10,7 +10,7 @@
 
 Пример базового маршрута:
 
-```
+```tsx
 import { createRouter, RouterProvider } from '@tanstack/router';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -39,7 +39,7 @@ TanStack Router поддерживает **вложенные маршруты**
 
 Пример вложенного маршрута:
 
-```
+```ts
 const router = createRouter({
   routes: [
     {
@@ -56,7 +56,7 @@ const router = createRouter({
 
 Внутри `DashboardLayout`:
 
-```
+```tsx
 function DashboardLayout() {
   return (
 
@@ -74,7 +74,7 @@ function DashboardLayout() {
 
 Пример динамического маршрута:
 
-```
+```ts
 const router = createRouter({
   routes: [
     {
@@ -98,7 +98,7 @@ const router = createRouter({
 
 Одной из сильных сторон TanStack Router является возможность **асинхронной загрузки данных**. Это позволяет предварительно загружать данные до отображения компонента, упрощая обработку ошибок и состояний загрузки.
 
-```
+```tsx
 function UserProfile({ loaderData }) {
   if (!loaderData) return Загрузка...;
   return Имя пользователя: {loaderData.name};
@@ -117,7 +117,7 @@ function UserProfile({ loaderData }) {
 
 TanStack Router предоставляет **декларативные и программные методы навигации**. Ключевой инструмент — хук `useRouter`.
 
-```
+```tsx
 import { useRouter } from '@tanstack/router';
 
 function NavigationButton() {
@@ -141,7 +141,7 @@ function NavigationButton() {
 
 Для оптимизации больших приложений TanStack Router поддерживает **ленивую загрузку компонентов** через динамический импорт:
 
-```
+```ts
 const DashboardPage = React.lazy(() => import('./pages/DashboardPage'));
 
 const router = createRouter({
@@ -161,7 +161,7 @@ const router = createRouter({
 
 Маршруты можно защищать, используя `loader` для проверки состояния пользователя или токена:
 
-```
+```ts
 const ProtectedRoute = {
   path: '/admin',
   loader: async () => {
@@ -201,7 +201,7 @@ router.navigate('/profile', { state: { from: '/dashboard' } });
 
 Пример:
 
-```
+```ts
 interface UserLoaderData {
   name: string;
   email: string;
@@ -229,13 +229,9 @@ TypeScript гарантирует, что `UserProfile` получит объе�
 
 Для начала работы с TanStack Router необходимо установить пакет через пакетный менеджер. Наиболее распространённые варианты:
 
-```
+```ts
 npm install @tanstack/router
-```
 
-или
-
-```
 yarn add @tanstack/router
 ```
 
@@ -245,7 +241,7 @@ yarn add @tanstack/router
 
 После установки библиотеку импортируют в файле конфигурации маршрутов или в главном компоненте приложения:
 
-```
+```ts
 import { createRouter, RouterProvider, Route } from '@tanstack/router';
 ```
 
@@ -261,7 +257,7 @@ import { createRouter, RouterProvider, Route } from '@tanstack/router';
 
 Пример базовой структуры:
 
-```
+```ts
 const homeRoute = new Route({
   path: '/',
   component: HomePage,
@@ -287,7 +283,7 @@ const router = createRouter({
 
 После создания маршрутов необходимо обернуть корневой компонент приложения в `RouterProvider`:
 
-```
+```tsx
 import { RouterProvider } from '@tanstack/router';
 
 function App() {
@@ -301,7 +297,7 @@ function App() {
 
 TanStack Router поддерживает параметры в пути. Они описываются с использованием двоеточий:
 
-```
+```ts
 const userRoute = new Route({
   path: '/user/:userId',
   component: UserPage,
@@ -310,7 +306,7 @@ const userRoute = new Route({
 
 В компоненте доступ к параметрам осуществляется через хук:
 
-```
+```tsx
 import { useParams } from '@tanstack/router';
 
 function UserPage() {
@@ -323,13 +319,13 @@ function UserPage() {
 
 Навигация между маршрутами осуществляется через `router.navigate`:
 
-```
+```ts
 router.navigate({ to: '/about' });
 ```
 
 Или с использованием ссылок в JSX через компонент `Link`:
 
-```
+```ts
 import { Link } from '@tanstack/router';
 
 О нас
@@ -339,7 +335,7 @@ import { Link } from '@tanstack/router';
 
 Рекомендуется задавать корневой маршрут (`*`), который срабатывает на несуществующие пути, что предотвращает ошибки 404:
 
-```
+```ts
 const notFoundRoute = new Route({
   path: '*',
   component: NotFoundPage,
@@ -350,7 +346,7 @@ const notFoundRoute = new Route({
 
 TanStack Router позволяет связывать состояние приложения с маршрутизацией через `loader` и `action` функции:
 
-```
+```ts
 const userRoute = new Route({
   path: '/user/:userId',
   component: UserPage,
@@ -368,7 +364,7 @@ const userRoute = new Route({
 
 При использовании TypeScript TanStack Router предоставляет строгую типизацию параметров маршрута и возвращаемых данных:
 
-```
+```ts
 interface UserParams {
   userId: string;
 }
@@ -389,13 +385,13 @@ const userRoute = new Route({
 
 Каждый файл в директории маршрутов соответствует отдельному маршруту приложения. Например, файл:
 
-```
+```ts
 /routes/dashboard.jsx
 ```
 
 автоматически становится маршрутом `/dashboard`. Если внутри директории создаются вложенные папки:
 
-```
+```ts
 /routes/dashboard/analytics.jsx
 ```
 
@@ -405,13 +401,13 @@ const userRoute = new Route({
 
 TanStack Router поддерживает динамические сегменты через квадратные скобки. Например:
 
-```
+```ts
 /routes/users/[userId].jsx
 ```
 
 создаёт маршрут `/users/:userId`, где `userId` доступен через объект параметров маршрута. Динамические сегменты можно комбинировать с вложенными маршрутами:
 
-```
+```ts
 /routes/users/[userId]/settings.jsx
 ```
 
@@ -421,7 +417,7 @@ TanStack Router поддерживает динамические сегмент
 
 Файлы с названием `index.jsx` обрабатываются как индекс маршрута родительской папки. Пример:
 
-```
+```bash
 /routes/dashboard/index.jsx
 ```
 
@@ -431,7 +427,7 @@ TanStack Router поддерживает динамические сегмент
 
 TanStack Router позволяет использовать layout-компоненты для групп маршрутов. Layout размещается в папке и оборачивает все дочерние маршруты. Пример структуры:
 
-```
+```bash
 /routes/dashboard/_layout.jsx
 /routes/dashboard/analytics.jsx
 /routes/dashboard/reports.jsx
@@ -443,7 +439,7 @@ TanStack Router позволяет использовать layout-компон�
 
 Вложенные маршруты в файловой системе создаются автоматически. Важно, чтобы каждый вложенный маршрут экспортировал компонент с именованным экспортом `Component` или дефолтным экспортом. Пример:
 
-```
+```tsx
 // routes/dashboard/analytics.jsx
 export default function Analytics() {
   return <div>Аналитика</div>;
@@ -456,7 +452,7 @@ TanStack Router на основе структуры файлов строит �
 
 Каждый маршрут может экспортировать функции `loader` и `action`, которые TanStack Router автоматически вызывает при переходе на соответствующий путь. Файловая структура облегчает распределение этих функций:
 
-```
+```ts
 // routes/users/[userId].jsx
 export async function loader({ params }) {
   const response = await fetch(`/api/users/${params.userId}`);
@@ -480,7 +476,7 @@ export async function loader({ params }) {
 
 Простейшая структура проекта:
 
-```
+```bash
 /routes
   index.jsx           -> '/'
   about.jsx           -> '/about'
@@ -508,7 +504,7 @@ export async function loader({ params }) {
 
 **1. `src/routes` — маршруты приложения** В этой директории хранятся все определения маршрутов. Хорошая практика — создавать поддиректории для каждого крупного раздела приложения. Например:
 
-```
+```bash
 src/routes/
   ├─ index.tsx
   ├─ dashboard/
@@ -531,7 +527,7 @@ src/routes/
 
 **2. `src/components` — компоненты интерфейса** Компоненты, используемые в маршрутах, хранятся отдельно. Это позволяет не смешивать логику маршрутизации и представление. Подкатегории можно создавать для крупных разделов приложения:
 
-```
+```bash
 src/components/
   ├─ layout/
   │   └─ MainLayout.tsx
@@ -552,7 +548,7 @@ src/components/
 
 **3. `src/router.ts` — корневой роутер** Файл `router.ts` содержит иерархию всех маршрутов и создаёт экземпляр роутера с помощью `createRouter`. Пример базовой структуры:
 
-```
+```ts
 import { createRouter } from '@tanstack/router'
 import { rootRoute } from './routes'
 import { dashboardRoute } from './routes/dashboard'
@@ -582,7 +578,7 @@ TanStack Router позволяет легко работать с динамич
 - Файл `[userId].tsx` автоматически связывает сегмент URL с параметром `userId`.
 - Внутри маршрута доступ к параметрам осуществляется через хук `useParams`:
 
-```
+```tsx
 import { useParams } from '@tanstack/router'
 
 export default function UserPage() {
@@ -602,12 +598,12 @@ export default function UserPage() {
 
 TanStack Router поддерживает вложенные маршруты с собственными лэйаутами. Например:
 
-```
+```bash
 src/routes/dashboard/index.tsx       // основной лэйаут dashboard
 src/routes/dashboard/analytics.tsx   // вложенный маршрут
 ```
 
-```
+```ts
 export const dashboardRoute = rootRoute.addChild({
   path: 'dashboard',
   component: DashboardLayout,
@@ -634,7 +630,7 @@ export const dashboardRoute = rootRoute.addChild({
 - **Файл маршрута** отвечает только за путь и компонент.
 - **Файл loader’а или service** занимается загрузкой данных:
 
-```
+```ts
 // src/routes/users/[userId].ts
 export const userLoader = async ({ params }) => {
   const response = await fetch(`/api/users/${params.userId}`)
@@ -644,7 +640,7 @@ export const userLoader = async ({ params }) => {
 
 В компоненте маршрута подключается loader через TanStack Router:
 
-```
+```tsx
 import { useLoaderData } from '@tanstack/router'
 
 export default function UserPage() {
@@ -673,7 +669,7 @@ TanStack Router представляет собой современную би�
 
 Маршруты в TanStack Router задаются объектами, где ключевыми свойствами являются `path`, `component` и `children`.
 
-```
+```tsx
 import { createRouter, RouterProvider } from '@tanstack/router';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
@@ -705,7 +701,7 @@ const router = createRouter({
 
 Для работы маршрутизатора необходимо обернуть корневой компонент приложения в `RouterProvider` и передать ему объект маршрутизатора:
 
-```
+```tsx
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
@@ -726,7 +722,7 @@ ReactDOM.render(
 
 **Пример использования `useNavigate`:**
 
-```
+```tsx
 import { useNavigate } from '@tanstack/router';
 
 function HomePage() {
@@ -742,7 +738,7 @@ function HomePage() {
 
 **Пример использования `<Link>`:**
 
-```
+```tsx
 import { Link } from '@tanstack/router';
 
 function Menu() {
@@ -762,7 +758,7 @@ function Menu() {
 
 Маршруты могут содержать динамические сегменты, которые можно извлекать с помощью хука `useParams`:
 
-```
+```ts
 import { useParams } from '@tanstack/router';
 
 function UserPage() {
@@ -777,7 +773,7 @@ function UserPage() {
 
 Вложенные маршруты позволяют создавать иерархическую навигацию. Родительский маршрут задаёт базовый путь, а дочерние маршруты добавляют сегменты:
 
-```
+```ts
 const router = createRouter({
   routes: [
     {
@@ -794,7 +790,7 @@ const router = createRouter({
 
 Вложенные маршруты рендерятся через компонент `Outlet`:
 
-```
+```tsx
 import { Outlet } from '@tanstack/router';
 
 function DashboardLayout() {
@@ -813,14 +809,14 @@ function DashboardLayout() {
 
 TanStack Router поддерживает передачу состояния и query-параметров при переходах. Для этого можно использовать объект в `navigate` или `Link`:
 
-```
+```ts
 navigate('/user/123', { state: { fromDashboard: true }, search: { tab: 'profile' } });
 ```
 
 - `state` передаёт данные между страницами без изменения URL.
 - `search` позволяет задавать query-параметры, доступные через `useSearchParams`.
 
-```
+```tsx
 import { useSearchParams } from '@tanstack/router';
 
 function UserPage() {
@@ -834,7 +830,7 @@ function UserPage() {
 
 Навигация может выполняться программно в ответ на события, проверки авторизации или завершение операций:
 
-```
+```ts
 if (!user.isLoggedIn) {
   navigate('/login', { replace: true });
 }
@@ -860,7 +856,7 @@ if (!user.isLoggedIn) {
 
 Router создается с помощью функции `createRouter`, которая принимает объект конфигурации маршрутов:
 
-```
+```ts
 import { createRouter } from '@tanstack/router'
 
 const router = createRouter({
@@ -887,7 +883,7 @@ const router = createRouter({
 
 TanStack Router позволяет определять параметры прямо в пути:
 
-```
+```ts
 {
   path: '/users/:userId',
   component: UserProfile,
@@ -896,7 +892,7 @@ TanStack Router позволяет определять параметры пр�
 
 Параметры можно получить через хук `useParams`:
 
-```
+```tsx
 import { useParams } from '@tanstack/router'
 
 function UserProfile() {
@@ -912,7 +908,7 @@ function UserProfile() {
 
 Router поддерживает вложенные маршруты через свойство `children`:
 
-```
+```ts
 {
   path: '/dashboard',
   component: DashboardLayout,
@@ -925,7 +921,7 @@ Router поддерживает вложенные маршруты через �
 
 Для рендеринга дочерних маршрутов используется компонент `Outlet`:
 
-```
+```tsx
 function DashboardLayout() {
   return (
     <div>
@@ -945,7 +941,7 @@ function DashboardLayout() {
 
 TanStack Router позволяет асинхронно загружать данные на уровне маршрута с помощью свойства `loader`:
 
-```
+```ts
 {
   path: '/posts/:postId',
   component: PostPage,
@@ -958,7 +954,7 @@ TanStack Router позволяет асинхронно загружать да�
 
 Данные, возвращаемые `loader`, можно получить через хук `useLoaderData`:
 
-```
+```tsx
 import { useLoaderData } from '@tanstack/router'
 
 function PostPage() {
@@ -981,7 +977,7 @@ Router использует историю браузера для управл�
 
 Пример создания Router с history:
 
-```
+```ts
 import { createBrowserHistory } from '@tanstack/router'
 
 const router = createRouter({
@@ -994,7 +990,7 @@ const router = createRouter({
 
 Для программной навигации применяется метод `router.navigate`:
 
-```
+```ts
 router.navigate({ to: '/about' })
 ```
 
@@ -1007,7 +1003,7 @@ router.navigate({ to: '/about' })
 
 Router поддерживает обработку ошибок на уровне маршрута с помощью свойства `errorComponent`:
 
-```
+```ts
 {
   path: '/posts/:postId',
   component: PostPage,
@@ -1035,7 +1031,7 @@ TanStack Router предоставляет несколько хуков, кот
 
 Пример использования:
 
-```
+```ts
 {
   path: '/profile',
   component: ProfilePage,
@@ -1067,7 +1063,7 @@ TanStack Router предоставляет несколько хуков, кот
 
 **Определение статического маршрута** выполняется через объект маршрута:
 
-```
+```ts
 import { createRouter, createRouteConfig } from '@tanstack/router';
 
 const routeConfig = createRouteConfig()
@@ -1100,7 +1096,7 @@ const router = createRouter({ routeConfig });
 
 **Пример определения динамического маршрута**:
 
-```
+```ts
 const routeConfig = createRouteConfig()
   .createRoute({
     path: '/users/:userId',
@@ -1112,7 +1108,7 @@ const router = createRouter({ routeConfig });
 
 В этом случае `UserProfilePage` получает доступ к параметру `userId` через объект `useParams`:
 
-```
+```tsx
 import { useParams } from '@tanstack/router';
 
 function UserProfilePage() {
@@ -1129,7 +1125,7 @@ function UserProfilePage() {
 
 **Пример навигации с параметрами**:
 
-```
+```ts
 router.navigate({ to: '/users/:userId', params: { userId: 42 } });
 ```
 
@@ -1139,7 +1135,7 @@ router.navigate({ to: '/users/:userId', params: { userId: 42 } });
 
 TanStack Router позволяет комбинировать статические и динамические маршруты в иерархии. Вложенные маршруты определяются с помощью свойства `children`:
 
-```
+```ts
 const routeConfig = createRouteConfig()
   .createRoute({
     path: '/users',
@@ -1170,7 +1166,7 @@ const routeConfig = createRouteConfig()
 
 Для динамических маршрутов важно корректно работать с параметрами. TanStack Router поддерживает строгую типизацию:
 
-```
+```ts
 import { createRouter, Route } from '@tanstack/router';
 
 type Params = { userId: string };
@@ -1215,7 +1211,7 @@ const userRoute: Route = routeConfig.createRoute({
 
 Пример базовой структуры:
 
-```
+```ts
 import { createRouter, Route } from '@tanstack/router';
 import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
@@ -1252,7 +1248,7 @@ const router = createRouter({
 
 Пример layout-компонента с вложенными маршрутами:
 
-```
+```tsx
 function DashboardLayout({ children }) {
   return (
 
@@ -1284,7 +1280,7 @@ const dashboardRoute = {
 
 Пример:
 
-```
+```ts
 const userRoute = {
   path: 'users/:userId',
   component: UserLayout,
@@ -1297,7 +1293,7 @@ const userRoute = {
 
 В этом случае `:userId` доступен как параметр родителя и может быть использован всеми дочерними маршрутами. Для получения параметров используется хук `useParams()`:
 
-```
+```tsx
 import { useParams } from '@tanstack/router';
 
 function UserProfilePage() {
@@ -1317,7 +1313,7 @@ TanStack Router поддерживает два основных подхода 
 
 Пример с `Outlet`:
 
-```
+```tsx
 import { Outlet } from '@tanstack/router';
 
 function DashboardLayout() {
@@ -1343,7 +1339,7 @@ function DashboardLayout() {
 
 Пример:
 
-```
+```ts
 const router = createRouter({
   routeConfig: [
     {
@@ -1399,7 +1395,7 @@ const router = createRouter({
 
 Пример базового корневого маршрута:
 
-```
+```ts
 import { createRootRoute } from '@tanstack/router';
 import AppLayout from './layouts/AppLayout';
 
@@ -1423,7 +1419,7 @@ export const rootRoute = createRootRoute({
 
 Пример вложенных маршрутов:
 
-```
+```ts
 import { createRoute } from '@tanstack/router';
 import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage';
@@ -1447,7 +1443,7 @@ rootRoute.children = [homeRoute, profileRoute];
 
 Корневой маршрут позволяет централизованно загружать данные, которые нужны на большинстве страниц. Функция `loader` выполняется до рендера компонента и может возвращать промис с данными:
 
-```
+```ts
 export const rootRoute = createRootRoute({
   path: '/',
   component: AppLayout,
@@ -1460,7 +1456,7 @@ export const rootRoute = createRootRoute({
 
 Эти данные доступны в дочерних маршрутах через хук `useLoaderData()`:
 
-```
+```tsx
 import { useLoaderData } from '@tanstack/router';
 
 function ProfilePage() {
@@ -1475,7 +1471,7 @@ function ProfilePage() {
 
 Пример использования:
 
-```
+```ts
 export const rootRoute = createRootRoute({
   path: '/',
   component: AppLayout,
@@ -1491,7 +1487,7 @@ export const rootRoute = createRootRoute({
 
 Корневой маршрут также задаёт базовый путь для построения всех ссылок в приложении. В TanStack Router используется система именованных маршрутов, что позволяет ссылаться на маршруты по ключу, а не по строковому пути. Это повышает стабильность навигации при изменении URL:
 
-```
+```tsx
 import { useNavigate } from '@tanstack/router';
 
 function Header() {
@@ -1507,7 +1503,7 @@ function Header() {
 
 Корневой маршрут часто используется для определения layout приложения. В TanStack Router layout может быть вложенным: корневой маршрут задаёт глобальный layout, а дочерние маршруты могут добавлять свои специфические layout-компоненты. При рендеринге компонента маршрута TanStack Router автоматически объединяет все layout-уровни.
 
-```
+```tsx
 function AppLayout({ children }) {
   return (
     <div>
@@ -1540,7 +1536,7 @@ TanStack Router в JavaScript поддерживает концепцию **ма
 
 Пример базовой структуры проекта:
 
-```
+```bash
 src/
   routes/
     index.jsx
@@ -1561,7 +1557,7 @@ src/
 
 Использование **квадратных скобок** `[param]` в имени файла создаёт динамический параметр маршрута. Пример:
 
-```
+```tsx
 // src/routes/users/[userId].jsx
 import { useParams } from '@tanstack/router';
 
@@ -1585,7 +1581,7 @@ export default function UserProfile() {
 
 Файловая система подключается через **функцию `createFileRouter`**, которая автоматически сканирует папку маршрутов:
 
-```
+```tsx
 import { createFileRouter } from '@tanstack/router';
 import { FileRouterProvider } from '@tanstack/router';
 
@@ -1607,7 +1603,7 @@ export default function App() {
 
 Файловый подход отлично сочетается с **вложенными маршрутами**.
 
-```
+```bash
 src/routes/
   dashboard/
     index.jsx
@@ -1621,7 +1617,7 @@ src/routes/
 
 Пример Layout-компонента:
 
-```
+```tsx
 // src/routes/dashboard/layout.jsx
 import { Outlet } from '@tanstack/router';
 
@@ -1655,7 +1651,7 @@ export default function DashboardLayout() {
 
 Для обработки всех остальных маршрутов можно использовать файл с именем `[...all].jsx`:
 
-```
+```tsx
 // src/routes/[...all].jsx
 export default function NotFound() {
   return <h1>Страница не найдена</h1>;
@@ -1671,7 +1667,7 @@ export default function NotFound() {
 
 Файловая структура позволяет связывать **data loader** и маршруты прямо через файлы:
 
-```
+```tsx
 // src/routes/users/[userId].jsx
 import { useLoader } from '@tanstack/router';
 
@@ -1713,7 +1709,7 @@ export default function UserProfile() {
 
 ### Итоговая структура для крупного приложения
 
-```
+```bash
 src/routes/
   index.jsx
   about.jsx
@@ -1748,7 +1744,7 @@ TanStack Router предоставляет мощный и гибкий подх
 
 Маршруты создаются с помощью функции `createRouter`, которая принимает конфигурацию маршрутов в виде массива объектов. Каждый объект описывает путь, компонент, асинхронные данные и дочерние маршруты.
 
-```
+```ts
 import { createRouter, RouterProvider } from '@tanstack/router';
 import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage';
@@ -1781,7 +1777,7 @@ const router = createRouter({
 
 TanStack Router поддерживает динамические сегменты маршрута и предоставляет API для извлечения параметров:
 
-```
+```tsx
 const ProfilePage = ({ params }) => {
   return <div>Профиль пользователя: {params.userId}</div>;
 };
@@ -1796,7 +1792,7 @@ const ProfilePage = ({ params }) => {
 
 Для создания иерархий страниц используется ключ `children`:
 
-```
+```ts
 const router = createRouter({
   routes: [
     {
@@ -1829,7 +1825,7 @@ const router = createRouter({
 
 Маршруты могут содержать **loader-функции**, которые выполняются перед рендерингом компонента:
 
-```
+```ts
 const router = createRouter({
   routes: [
     {
@@ -1854,7 +1850,7 @@ const router = createRouter({
 
 Каждый маршрут может иметь собственный **ErrorBoundary**:
 
-```
+```ts
 {
   path: '/profile/:userId',
   component: ProfilePage,
@@ -1871,7 +1867,7 @@ const router = createRouter({
 
 TanStack Router поддерживает навигацию через API маршрутизатора:
 
-```
+```ts
 import { useRouter } from '@tanstack/router';
 
 const navigateToProfile = () => {
@@ -1891,7 +1887,7 @@ const navigateToProfile = () => {
 
 Можно создавать маршруты динамически, используя функции и массивы данных:
 
-```
+```ts
 const users = [{ id: 1 }, { id: 2 }];
 
 const userRoutes = users.map(user => ({
@@ -1916,7 +1912,7 @@ const router = createRouter({
 
 Для оптимизации производительности можно загружать компоненты маршрутов лениво:
 
-```
+```ts
 import { lazy } from 'react';
 
 const DashboardPage = lazy(() => import('./pages/DashboardPage'));
@@ -1937,7 +1933,7 @@ const DashboardPage = lazy(() => import('./pages/DashboardPage'));
 
 Маршруты могут использовать `context` для передачи данных в дочерние компоненты:
 
-```
+```ts
 const router = createRouter({
   routes: [
     {
@@ -1961,7 +1957,7 @@ const router = createRouter({
 
 TanStack Router полностью типизирован:
 
-```
+```ts
 type RouterParams = {
   userId: string;
 };
@@ -2006,7 +2002,7 @@ const router = createRouter<RouterParams>({
 
 Пример маршрута с path parameter:
 
-```
+```ts
 import { createRouter, Route } from '@tanstack/router';
 
 const userRoute = new Route({
@@ -2018,7 +2014,7 @@ const userRoute = new Route({
 - `:userId` – динамическая часть URL.
 - Значение параметра доступно через хук `useParams()`:
 
-```
+```tsx
 import { useParams } from '@tanstack/router';
 
 function UserProfile() {
@@ -2033,7 +2029,7 @@ function UserProfile() {
 2. **Совместимость с nested routes:** параметры родительского маршрута доступны во всех дочерних маршрутах.
 3. **Типизация:** в TypeScript можно указать тип параметра через generic:
 
-```
+```ts
 const userRoute = new Route<{ userId: string }>({
   path: '/users/:userId',
   component: UserProfile,
@@ -2046,7 +2042,7 @@ const userRoute = new Route<{ userId: string }>({
 
 **Search parameters** (параметры поиска) передаются через строку запроса, после `?` в URL. В TanStack Router они определяются через объект `searchSchema` при создании маршрута:
 
-```
+```ts
 import { z } from 'zod';
 
 const searchRoute = new Route({
@@ -2062,7 +2058,7 @@ const searchRoute = new Route({
 - `searchSchema` использует **Zod** для валидации и приведения типов.
 - Значения доступны через хук `useSearchParams()`:
 
-```
+```tsx
 import { useSearchParams } from '@tanstack/router';
 
 function ProductsPage() {
@@ -2083,7 +2079,7 @@ function ProductsPage() {
 
 Вложенные маршруты могут наследовать параметры от родителя:
 
-```
+```ts
 const userRoute = new Route({
   path: '/users/:userId',
   component: UserLayout,
@@ -2105,7 +2101,7 @@ const userSettingsRoute = new Route({
 
 Для перехода к маршруту с параметрами используется `router.navigate()`:
 
-```
+```ts
 router.navigate({
   to: '/users/:userId',
   params: { userId: '123' },
@@ -2123,7 +2119,7 @@ router.navigate({
 
 Некорректные или отсутствующие параметры можно обрабатывать через `validate` функцию или через `searchSchema`:
 
-```
+```ts
 const userRoute = new Route({
   path: '/users/:userId',
   component: UserProfile,
@@ -2144,7 +2140,7 @@ const userRoute = new Route({
 
 Можно комбинировать несколько path и search parameters:
 
-```
+```ts
 const blogRoute = new Route({
   path: '/blogs/:blogId/posts/:postId',
   component: BlogPost,
@@ -2156,7 +2152,7 @@ const blogRoute = new Route({
 
 - Доступ к параметрам:
 
-```
+```ts
 const { blogId, postId } = useParams();
 const { highlight } = useSearchParams();
 ```
@@ -2183,7 +2179,7 @@ TanStack Router предоставляет мощный и гибкий меха
 
 Параметры поиска можно определить при создании маршрута с помощью свойства `searchSchema` или `search`. Они поддерживают типизацию и валидацию. Пример определения маршрута с параметрами поиска:
 
-```
+```ts
 import { createRouter, Route } from '@tanstack/router';
 import { z } from 'zod';
 
@@ -2208,7 +2204,7 @@ const productRoute = new Route({
 
 Для доступа к параметрам поиска внутри компонента используется хук `useSearch`. Он возвращает объект с актуальными значениями параметров и позволяет отслеживать их изменения:
 
-```
+```tsx
 import { useSearch } from '@tanstack/router';
 
 function ProductPage() {
@@ -2232,7 +2228,7 @@ function ProductPage() {
 
 TanStack Router предоставляет метод `navigate` для изменения параметров поиска без полной перезагрузки страницы. Это особенно полезно для фильтров и пагинации:
 
-```
+```tsx
 import { useNavigate } from '@tanstack/router';
 
 function Pagination() {
@@ -2257,7 +2253,7 @@ function Pagination() {
 
 Помимо простых строк и чисел, параметры поиска могут быть массивами, объектами или булевыми значениями. TanStack Router автоматически сериализует и десериализует их в строку URL и обратно:
 
-```
+```ts
 const filterRoute = new Route({
   getPath: () => '/filter',
   searchSchema: z.object({
@@ -2274,7 +2270,7 @@ const filterRoute = new Route({
 
 Параметры поиска могут использоваться одновременно с динамическими сегментами URL:
 
-```
+```ts
 const userRoute = new Route({
   getPath: ({ userId }) => `/users/${userId}`,
   searchSchema: z.object({
@@ -2286,7 +2282,7 @@ const userRoute = new Route({
 
 URL `/users/123?tab=posts` позволяет извлекать и динамический сегмент `userId`, и параметр поиска `tab` в одном компоненте:
 
-```
+```tsx
 function UserPage({ params }) {
   const search = useSearch({ route: userRoute });
   console.log(params.userId); // 123
@@ -2298,7 +2294,7 @@ function UserPage({ params }) {
 
 TanStack Router отслеживает изменения параметров поиска и автоматически вызывает перерендер компонента. Это позволяет создавать интерактивные интерфейсы, где фильтры и сортировка обновляются без перезагрузки страницы. Например:
 
-```
+```tsx
 function FilteredList() {
   const search = useSearch({ route: filterRoute });
 
@@ -2316,7 +2312,7 @@ function FilteredList() {
 
 TanStack Router поддерживает декларативные ссылки через компонент `Link` с указанием параметров поиска:
 
-```
+```tsx
 import { Link } from '@tanstack/router';
 
 <Link to={productRoute} search={{ category: 'books', page: 2 }}>
@@ -2361,7 +2357,7 @@ https://example.com/dashboard#section=profile&tab=settings
 
 Для извлечения параметров хеша используется хук `useSearch` или прямой доступ через объект `router.state.location.hash`. Пример с хуком:
 
-```
+```tsx
 import { useRouter } from '@tanstack/router';
 
 function SectionViewer() {
@@ -2388,7 +2384,7 @@ function SectionViewer() {
 
 Изменение параметров хеша выполняется через методы маршрутизатора:
 
-```
+```ts
 router.navigate({
   hash: '#section=notifications&tab=activity'
 });
@@ -2406,7 +2402,7 @@ router.navigate({
 
 Часто требуется менять только один параметр хеша, сохраняя остальные:
 
-```
+```ts
 const updateHashParam = (key, value) => {
   const hashParams = new URLSearchParams(router.state.location.hash.replace(/^#/, ''));
   hashParams.set(key, value);
@@ -2430,7 +2426,7 @@ updateHashParam('tab', 'settings');
 
 Для реакции на изменения хеша используется подписка на состояние маршрутизатора:
 
-```
+```tsx
 import { useEffect } from 'react';
 import { useRouter } from '@tanstack/router';
 
@@ -2457,7 +2453,7 @@ function HashWatcher() {
 
 Хеш-параметры часто применяются для управления вкладками, аккордеонами или фильтрами:
 
-```
+```tsx
 function TabManager() {
   const router = useRouter();
   const hashParams = Object.fromEntries(
@@ -2502,7 +2498,7 @@ function TabManager() {
 
 Опциональный сегмент обозначается квадратными скобками `[]`. Например:
 
-```
+```ts
 const route = {
   path: '/products/[category]',
   component: ProductList,
@@ -2517,7 +2513,7 @@ const route = {
 - Если параметр не передан, его значение будет `undefined` в объекте `params`.
 - Можно комбинировать несколько опциональных сегментов:
 
-```
+```ts
 const route = {
   path: '/products/[category]/[brand]',
   component: ProductList,
@@ -2534,7 +2530,7 @@ const route = {
 
 Опциональные параметры передаются в компонент через объект `params`:
 
-```
+```tsx
 function ProductList({ params }) {
   const { category, brand } = params;
 
@@ -2556,7 +2552,7 @@ function ProductList({ params }) {
 
 TanStack Router поддерживает вложенные маршруты с опциональными сегментами. Это позволяет строить иерархию маршрутов с гибкой структурой:
 
-```
+```ts
 const routes = [
   {
     path: '/dashboard',
@@ -2576,7 +2572,7 @@ const routes = [
 
 При генерации URL с помощью функции `router.buildPath` или аналогичных методов, необязательные параметры можно пропускать. Если параметр не указан, сегмент автоматически опускается:
 
-```
+```ts
 const path1 = router.buildPath('/products/[category]/[brand]', {});
 // результат: '/products'
 
@@ -2597,7 +2593,7 @@ const path3 = router.buildPath('/products/[category]/[brand]', { category: 'elec
 
 1. **Фильтры товаров**
 
-```
+```ts
 const route = {
   path: '/shop/[category]/[brand]/[priceRange]',
   component: Shop,
@@ -2608,7 +2604,7 @@ const route = {
 
 1. **Страницы пользователя**
 
-```
+```ts
 const route = {
   path: '/profile/[tab]',
   component: ProfilePage,
@@ -2619,7 +2615,7 @@ const route = {
 
 1. **Документация или статьи**
 
-```
+```ts
 const route = {
   path: '/docs/[section]/[subsection]',
   component: DocsPage,
@@ -2640,7 +2636,7 @@ const route = {
 
 Для создания wildcard-маршрута используется путь вида:
 
-```
+```ts
 import { createRouter, createRouteConfig } from '@tanstack/router';
 
 const routes = createRouteConfig()
@@ -2660,7 +2656,7 @@ const router = createRouter({ routeConfig: routes });
 
 Wildcard-параметр автоматически передается в объект `params` компонента, которому соответствует маршрут. По умолчанию имя параметра — `'*'`:
 
-```
+```tsx
 function FilesPage({ params }) {
   console.log(params['*']); // "documents/report.pdf" или "images/photo.png"
   return <div>Путь: {params['*']}</div>;
@@ -2669,7 +2665,7 @@ function FilesPage({ params }) {
 
 Чтобы сделать код более читаемым, рекомендуется использовать именованные wildcard-параметры с помощью двоеточия и `*`:
 
-```
+```ts
 .createRoute({
   path: '/files/:path*',
   component: FilesPage,
@@ -2678,7 +2674,7 @@ function FilesPage({ params }) {
 
 Теперь доступ к значению производится через `params.path`:
 
-```
+```tsx
 function FilesPage({ params }) {
   console.log(params.path); // "documents/report.pdf"
   return <div>Путь: {params.path}</div>;
@@ -2691,7 +2687,7 @@ function FilesPage({ params }) {
 
 Wildcard-маршруты можно использовать совместно с вложенной структурой маршрутов. Например, если есть родительский маршрут `/dashboard/*`:
 
-```
+```ts
 const dashboardRoute = createRouteConfig()
   .createRoute({
     path: '/dashboard/*',
@@ -2725,7 +2721,7 @@ Wildcard-сегмент родительского маршрута (`*`) буд
 
 **Пример 1: Отображение файлов по пути**
 
-```
+```tsx
 const routes = createRouteConfig()
   .createRoute({
     path: '/files/:filePath*',
@@ -2772,7 +2768,7 @@ TanStack Router предоставляет гибкий и мощный спос
 
 Для создания маршрута с несколькими параметрами необходимо использовать синтаксис с двоеточиями (`:`) в пути маршрута. Например:
 
-```
+```ts
 import { createRouter, Route } from '@tanstack/router';
 
 const userRoute = new Route({
@@ -2787,7 +2783,7 @@ const userRoute = new Route({
 
 Параметры маршрута доступны через объект `params`, который предоставляется компоненту маршрута.
 
-```
+```tsx
 function UserPost({ params }) {
   return (
     <div>
@@ -2804,7 +2800,7 @@ function UserPost({ params }) {
 
 TanStack Router поддерживает вложенные маршруты, где каждый уровень может иметь свои параметры. Например:
 
-```
+```ts
 const appRouter = createRouter({
   routes: [
     new Route({
@@ -2823,7 +2819,7 @@ const appRouter = createRouter({
 
 В этом случае параметры верхнего уровня (`userId`) доступны и для дочернего маршрута `UserPost`, что позволяет использовать их совместно:
 
-```
+```tsx
 function UserPost({ params }) {
   console.log(params.userId); // параметр родителя
   console.log(params.postId); // параметр текущего маршрута
@@ -2835,7 +2831,7 @@ function UserPost({ params }) {
 
 Для перехода к маршруту с несколькими параметрами можно использовать объект `navigate` с указанием значений всех параметров:
 
-```
+```ts
 router.navigate('/users/:userId/posts/:postId', {
   params: { userId: '42', postId: '100' },
 });
@@ -2847,7 +2843,7 @@ router.navigate('/users/:userId/posts/:postId', {
 
 TanStack Router позволяет определять параметры как опциональные, добавляя знак `?` в пути:
 
-```
+```ts
 new Route({
   path: '/users/:userId/posts/:postId?',
   component: UserPost,
@@ -2860,7 +2856,7 @@ new Route({
 
 Для сложных приложений важно валидировать и преобразовывать параметры перед использованием. В TanStack Router это делается через функции `parseParams` и `validateParams`:
 
-```
+```ts
 new Route({
   path: '/users/:userId/posts/:postId',
   component: UserPost,
@@ -2879,7 +2875,7 @@ new Route({
 
 Параметры маршрута удобно сочетать с query-параметрами и состоянием маршрута. Например:
 
-```
+```ts
 router.navigate('/users/:userId/posts/:postId', {
   params: { userId: '42', postId: '100' },
   search: { filter: 'latest' },
@@ -2919,7 +2915,7 @@ router.navigate('/users/:userId/posts/:postId', {
 
 Пример:
 
-```
+```ts
 const routes = [
   { path: "/users/:id", component: User },
   { path: "/users/settings", component: UserSettings }
@@ -2940,7 +2936,7 @@ TanStack Router поддерживает вложенные маршруты ч�
 
 Пример структуры:
 
-```
+```ts
 const routes = [
   {
     path: "/dashboard",
@@ -2965,7 +2961,7 @@ const routes = [
 
 Пример:
 
-```
+```ts
 const routes = [
   { path: "/files/:fileId", component: FilePage },
   { path: "/files/*", component: FileFallback }
@@ -2982,7 +2978,7 @@ const routes = [
 
 Пример:
 
-```
+```ts
 const routes = [
   { path: "/products/:id", component: ProductPage },
   { path: "/products/:name", component: ProductByName }
@@ -3001,7 +2997,7 @@ const routes = [
 
 Пример:
 
-```
+```ts
 const routes = [
   {
     path: "/docs",
@@ -3038,7 +3034,7 @@ const routes = [
 
 **Пример базового использования:**
 
-```
+```tsx
 import { Link } from '@tanstack/router';
 
 function Navigation() {
@@ -3054,7 +3050,7 @@ function Navigation() {
 
 В этом примере `to` задаёт путь маршрута. Если маршрут содержит динамические сегменты, их можно передавать через объект `params`:
 
-```
+```tsx
 <Link to="/profile/:id" params={{ id: 123 }}>Профиль</Link>
 ```
 
@@ -3062,7 +3058,7 @@ function Navigation() {
 
 `Link` поддерживает передачу как **параметров маршрута**, так и **query-параметров**. Это важно для динамических страниц и фильтрации данных.
 
-```
+```tsx
 <Link
   to="/products/:category"
   params={{ category: 'books' }}
@@ -3079,7 +3075,7 @@ function Navigation() {
 
 Компонент `Link` может передавать состояние, которое будет доступно на целевой странице через объект маршрутизатора:
 
-```
+```ts
 <Link
   to="/checkout"
   state={{ fromCart: true }}
