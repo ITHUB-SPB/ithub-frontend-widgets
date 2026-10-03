@@ -1,0 +1,13 @@
+.DS_STORE
+
+node_modules
+dist
+
+package-lock.json
+
+*.sublime-project
+*.sublime-workspace
+.idea
+*.iml
+.vscode
+.zed
